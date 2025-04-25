@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReleaseNotes", "ReleaseNotes", "{F05288CE-401E-4812-BE75-A2BB5DF60BC9}"
+	ProjectSection(SolutionItems) = preProject
+		ReleaseNotes\0.1.0.md = ReleaseNotes\0.1.0.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0A277152-A540-46C3-AB3A-0E10968ECA73}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		NuGet.Config = NuGet.Config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{0DD3824E-DB0A-412F-9A1A-4F0AC36F21A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomManager.Infrastructure", "Service\RoomManager.Infrastructure\RoomManager.Infrastructure.csproj", "{47CB02F6-1943-4F4F-BF74-54434F3EE63E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomManager.Domain", "Service\RoomManager.Domain\RoomManager.Domain.csproj", "{F6668698-6F8B-41DC-9BA9-0D6A52422B01}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomManager.Application", "Service\RoomManager.Application\RoomManager.Application.csproj", "{0402CDB4-B4CC-4ACB-988C-C89C215B214A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomManager.API", "Service\RoomManager.API\RoomManager.API.csproj", "{848A2C88-2FE1-453E-B3CC-82E29AE0CD38}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47CB02F6-1943-4F4F-BF74-54434F3EE63E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47CB02F6-1943-4F4F-BF74-54434F3EE63E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47CB02F6-1943-4F4F-BF74-54434F3EE63E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47CB02F6-1943-4F4F-BF74-54434F3EE63E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6668698-6F8B-41DC-9BA9-0D6A52422B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6668698-6F8B-41DC-9BA9-0D6A52422B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6668698-6F8B-41DC-9BA9-0D6A52422B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6668698-6F8B-41DC-9BA9-0D6A52422B01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0402CDB4-B4CC-4ACB-988C-C89C215B214A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0402CDB4-B4CC-4ACB-988C-C89C215B214A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0402CDB4-B4CC-4ACB-988C-C89C215B214A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0402CDB4-B4CC-4ACB-988C-C89C215B214A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{848A2C88-2FE1-453E-B3CC-82E29AE0CD38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{848A2C88-2FE1-453E-B3CC-82E29AE0CD38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{848A2C88-2FE1-453E-B3CC-82E29AE0CD38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{848A2C88-2FE1-453E-B3CC-82E29AE0CD38}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{47CB02F6-1943-4F4F-BF74-54434F3EE63E} = {0DD3824E-DB0A-412F-9A1A-4F0AC36F21A6}
+		{F6668698-6F8B-41DC-9BA9-0D6A52422B01} = {0DD3824E-DB0A-412F-9A1A-4F0AC36F21A6}
+		{0402CDB4-B4CC-4ACB-988C-C89C215B214A} = {0DD3824E-DB0A-412F-9A1A-4F0AC36F21A6}
+		{848A2C88-2FE1-453E-B3CC-82E29AE0CD38} = {0DD3824E-DB0A-412F-9A1A-4F0AC36F21A6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6EE6075C-01C8-4326-8AF2-3C4753790D96}
+	EndGlobalSection
+EndGlobal

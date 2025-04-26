@@ -2,6 +2,7 @@
 {
     public class RoomModel
     {
+        public int Id { get; set; }
         public string Number { get; set; }
         public string Type { get; set; }
         public RoomAvailabilityModel Availability { get; set; }

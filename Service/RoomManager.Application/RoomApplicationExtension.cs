@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using Autofac;
-using ContentManager.Application.Queries;
+using RoomManager.Application.Queries;
 using EventBusUtility.Events;
 using FluentValidation;
 using MediatR;

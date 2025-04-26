@@ -1,4 +1,4 @@
-﻿namespace ContentManager.Application.Queries
+﻿namespace RoomManager.Application.Queries
 {
     public interface IRoomQueries
     {

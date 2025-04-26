@@ -3,7 +3,7 @@ using AutoMapper;
 using Microservice.Utility.Domain.SeedWork;
 
 
-namespace ContentManager.Application.Queries
+namespace RoomManager.Application.Queries
 {
     public class RoomQueries : IRoomQueries
     {

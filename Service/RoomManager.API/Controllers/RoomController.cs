@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ContentManager.Application.Queries;
+using RoomManager.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

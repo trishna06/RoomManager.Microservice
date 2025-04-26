@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.Internal;
-using RoomManager.Application.Queries.Models;
 using Microservice.Utility.Application.Interfaces;
 using Microservice.Utility.Domain.SeedWork;
 
@@ -12,15 +11,7 @@ namespace RoomManager.Application.Helpers
         {
             this.Internal().ForAllMaps((map, expr) => expr.AfterMap<MapCustomFieldAction>());
 
-            CreateCustomFieldMapper();
-
             // AutoMapper Mappings
-        }
-
-        public void CreateCustomFieldMapper()
-        {
-            CreateMap<CustomFieldMapping, CustomFieldMappingModel>().ReverseMap();
-            CreateMap<InputDetail, InputDetailModel>().ReverseMap();
         }
     }
 

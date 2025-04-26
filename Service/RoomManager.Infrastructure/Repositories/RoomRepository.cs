@@ -21,7 +21,7 @@ namespace RoomManager.Infrastructure.Repositories
         public async Task<Domain.Aggregates.RoomAggregate.Room> AddAsync(Domain.Aggregates.RoomAggregate.Room aggregate)
         {
             if (await _context.Room.AnyAsync(j => j.Number == aggregate.Number))
-                throw new RoomExistedException(aggregate.Number);
+                throw new RoomManagerExistedException(aggregate.Number);
             return _context.Room.Add(aggregate).Entity;
         }
 

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using Autofac;
-using EventBusUtility.Helper;
-using EventBusUtility.MassTransit;
+using EventBus.Utility.Helper;
+using EventBus.Utility.MassTransit;
 using IdentityManager.API.Helper;
 using IdentityManager.API.Helper.Models;
 using RoomManager.API.Configurations;
@@ -28,6 +28,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using PermissionManager.API.Helper;
 using Serilog;
+using Microservice.Utility.API.Helper;
 
 namespace RoomManager.API
 {
@@ -88,8 +89,8 @@ namespace RoomManager.API
 
             EndpointOptions endpointOptions = Configuration.GetSection(nameof(EndpointOptions)).Get<EndpointOptions>();
 
-            services.AddIdentityManagerService<TokenManager>(endpointOptions.GetEndpointUrl("IdentityManager"), IdentityManagerExtension.ApplicationType.API);
-            services.AddPermissionManagerService(endpointOptions.GetEndpointUrl("PermissionManager"), PermissionManagerExtension.ApplicationType.API);
+            services.AddIdentityManagerService<IdentityTokenManager>(endpointOptions.GetEndpointUrl("IdentityManager"), IdentityManagerExtension.ApplicationType.API);
+            services.AddPermissionManagerService<PermissionTokenManager>(endpointOptions.GetEndpointUrl("PermissionManager"), PermissionManagerExtension.ApplicationType.API);
 
             services.AddRoomApplication();
             services.AddRoomInfrastructure(DatabaseConnectionString);

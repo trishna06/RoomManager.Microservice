@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Confluent.Kafka;
@@ -33,14 +34,52 @@ namespace RoomManager.Application.BackgroundServices
             using IConsumer<string, string> consumer = new ConsumerBuilder<string, string>(conf).Build();
             consumer.Subscribe(new[] { "booking.events" });
 
-            while (!stoppingToken.IsCancellationRequested)
+            try
             {
-                ConsumeResult<string, string> result = consumer.Consume(stoppingToken);
-                RoomAvailabilityDto update = JsonSerializer.Deserialize<RoomAvailabilityDto>(result.Message.Value);
+                while (!stoppingToken.IsCancellationRequested)
+                {
+                    try
+                    {
+                        ConsumeResult<string, string> result = consumer.Consume(TimeSpan.FromMilliseconds(1000)); // <-- Wait max 1 sec
 
-                // update db status
+                        if (result == null)
+                        {
+                            await Task.Delay(100, stoppingToken); // Wait 100ms if no event
+                            continue;
+                        }
+
+                        if (result != null && result.Message != null)
+                        {
+                            RoomAvailabilityDto update = JsonSerializer.Deserialize<RoomAvailabilityDto>(result.Message.Value);
+
+
+                            Console.WriteLine(result.Message.Value);
+                        }
+                    }
+                    catch (ConsumeException ex)
+                    {
+                        if (ex.Error.IsFatal)
+                        {
+                            // Fatal errors (like missing topic): break loop
+                            Console.WriteLine($"Fatal error: {ex.Error.Reason}");
+                            break;
+                        }
+                        else
+                        {
+                            // Non-fatal errors: log and continue
+                            Console.WriteLine($"Consume error: {ex.Error.Reason}");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Unexpected error: {ex.Message}");
+                    }
+                }
+            }
+            finally
+            {
+                consumer.Close();
             }
         }
     }
-
 }

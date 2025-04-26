@@ -1,18 +1,23 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="10.0.1" />
-    <PackageReference Include="Microservice.Utility.Domain" Version="3.0.4" />
-    <PackageReference Include="Microservice.Utility.Exception" Version="3.0.4" />
+    <Compile Remove="SeedWorks\**" />
+    <EmbeddedResource Remove="SeedWorks\**" />
+    <None Remove="SeedWorks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.0" />
+    <PackageReference Include="Microservice.Utility.Domain" Version="4.0.3" />
+    <PackageReference Include="Microservice.Utility.Exception" Version="4.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="DomainEvents\" />
-    <Folder Include="SeedWorks\" />
   </ItemGroup>
   
 </Project>

@@ -1,16 +1,18 @@
 ﻿using System.Reflection;
 using Autofac;
 using RoomManager.Application.Queries;
-using EventBusUtility.Events;
+using EventBus.Utility.Events;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using RoomManager.Application.BackgroundServices;
 using RoomManager.Application.Behaviours;
+using Autofac.Extensions.DependencyInjection;
+using RoomManager.Application.Helpers;
 
 namespace RoomManager.Application
 {
-    public static class RoomApplicationExtension
+    public static class RoomManagerApplicationExtension
     {
         public static IServiceCollection AddRoomApplication(this IServiceCollection services)
         {
@@ -21,41 +23,41 @@ namespace RoomManager.Application
 
         public static IServiceCollection AddRoomQueries(this IServiceCollection services)
         {
-            //services.AddHostedService<KafkaConsumerService>();
+            services.AddHostedService<KafkaConsumerService>();
+            services.AddTransient<KafkaProducerHelper>();
             services.AddTransient<IRoomQueries, RoomQueries>();
             return services;
         }
     }
-
     public class MediatorModule : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
-                   .AsImplementedInterfaces();
+                   .AsImplementedInterfaces().InstancePerLifetimeScope();
 
             // Register all the Command classes (they implement IRequestHandler) in assembly holding the Commands
-            builder.RegisterAssemblyTypes(typeof(RoomApplicationExtension).GetTypeInfo().Assembly)
+            builder.RegisterAssemblyTypes(typeof(RoomManagerApplicationExtension).GetTypeInfo().Assembly)
+                   .AsClosedTypesOf(typeof(IRequestHandler<>));
+
+            // Register all the Command classes (they implement IRequestHandler) in assembly holding the Commands
+            builder.RegisterAssemblyTypes(typeof(RoomManagerApplicationExtension).GetTypeInfo().Assembly)
                    .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             // Register the DomainEventHandler classes (they implement INotificationHandler<>) in assembly holding the Domain Events
-            builder.RegisterAssemblyTypes(typeof(RoomApplicationExtension).GetTypeInfo().Assembly)
+            builder.RegisterAssemblyTypes(typeof(RoomManagerApplicationExtension).GetTypeInfo().Assembly)
                    .AsClosedTypesOf(typeof(INotificationHandler<>));
 
-            // Register the Command's Validators (Validators based on FluentValidation library)            
-            builder.RegisterAssemblyTypes(typeof(RoomApplicationExtension).GetTypeInfo().Assembly)
+            // Register the Command's Validators (Validators based on FluentValidation library)
+            builder.RegisterAssemblyTypes(typeof(RoomManagerApplicationExtension).GetTypeInfo().Assembly)
                    .Where(t => t.IsClosedTypeOf(typeof(IValidator<>)))
                    .AsImplementedInterfaces();
 
-            builder.Register<ServiceFactory>(context =>
-            {
-                IComponentContext componentContext = context.Resolve<IComponentContext>();
-                return t => { object o; return componentContext.TryResolve(t, out o) ? o : null; };
-            });
+            builder.Populate(new ServiceCollection());
 
-            builder.RegisterGeneric(typeof(LoggingBehaviour<,>)).As(typeof(IPipelineBehavior<,>));
-            builder.RegisterGeneric(typeof(ValidatorBehaviour<,>)).As(typeof(IPipelineBehavior<,>));
-            builder.RegisterGeneric(typeof(TransactionBehaviour<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(LoggingBehaviour<,>)).As(typeof(IPipelineBehavior<,>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(ValidatorBehaviour<,>)).As(typeof(IPipelineBehavior<,>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(TransactionBehaviour<,>)).As(typeof(IPipelineBehavior<,>)).InstancePerLifetimeScope();
         }
     }
 
@@ -63,7 +65,7 @@ namespace RoomManager.Application
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(RoomApplicationExtension).GetTypeInfo().Assembly)
+            builder.RegisterAssemblyTypes(typeof(RoomManagerApplicationExtension).GetTypeInfo().Assembly)
                    .AsClosedTypesOf(typeof(IIntegrationEventHandler<>));
         }
     }

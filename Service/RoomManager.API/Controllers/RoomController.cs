@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using RoomManager.Application.Queries;
+using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RoomManager.Application.Commands.DataTransferObjects;
+using RoomManager.Application.Helpers;
+using RoomManager.Application.Queries;
 
 namespace RoomManager.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RoomController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly IRoomQueries _queries;
+        private readonly KafkaProducerHelper _kafkaProducer;
 
-        public RoomController(IMediator mediator,
-                                    IRoomQueries queries)
+        public RoomController(IMediator mediator, IRoomQueries queries, KafkaProducerHelper kafkaProducer)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _queries = queries ?? throw new ArgumentNullException(nameof(queries));
+            _kafkaProducer = kafkaProducer ?? throw new ArgumentNullException(nameof(kafkaProducer));
         }
 
         [HttpGet]
@@ -61,6 +63,14 @@ namespace RoomManager.API.Controllers
         {
             // Assume deletion successful
             return NoContent();
+        }
+
+        [HttpPost("Producer")]
+        public async Task<IActionResult> ProducerAsync([FromBody] RoomAvailabilityDto room)
+        {
+            await _kafkaProducer.ProduceAsync(room);
+
+            return Ok("Message sent to Kafka!");
         }
     }
 }

@@ -2,6 +2,8 @@
 using AutoMapper.Internal;
 using Microservice.Utility.Application.Interfaces;
 using Microservice.Utility.Domain.SeedWork;
+using RoomManager.Application.Queries.Models;
+using RoomManager.Domain.Aggregates.RoomAggregate;
 
 namespace RoomManager.Application.Helpers
 {
@@ -11,7 +13,11 @@ namespace RoomManager.Application.Helpers
         {
             this.Internal().ForAllMaps((map, expr) => expr.AfterMap<MapCustomFieldAction>());
 
-            // AutoMapper Mappings
+            CreateMap<Room, RoomModel>()
+                .ReverseMap();
+
+            CreateMap<RoomAvailability, RoomAvailabilityModel>()
+                .ReverseMap();
         }
     }
 

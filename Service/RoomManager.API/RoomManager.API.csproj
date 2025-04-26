@@ -12,9 +12,6 @@
 
   <ItemGroup>
     <PackageReference Include="Configuration.Contract" Version="1.0.3" />
-    <PackageReference Include="DevExpress.AspNetCore.RichEdit" Version="24.2.3" />
-    <PackageReference Include="DevExpress.AspNetCore.Spreadsheet" Version="24.2.3" />
-    <PackageReference Include="DevExpress.Document.Processor" Version="24.2.3" />
     <PackageReference Include="MimeKit" Version="4.9.0" />
     <PackageReference Include="DevExtreme.AspNet.Data" Version="4.0.1" />
     <PackageReference Include="IdentityManager.API.Helper" Version="4.0.5" />

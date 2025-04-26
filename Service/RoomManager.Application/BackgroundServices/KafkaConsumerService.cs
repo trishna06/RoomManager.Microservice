@@ -50,7 +50,7 @@ namespace RoomManager.Application.BackgroundServices
 
                         if (result != null && result.Message != null)
                         {
-                            RoomAvailabilityDto update = JsonSerializer.Deserialize<RoomAvailabilityDto>(result.Message.Value);
+                            RoomDto update = JsonSerializer.Deserialize<RoomDto>(result.Message.Value);
 
 
                             Console.WriteLine(result.Message.Value);

@@ -1,13 +1,13 @@
 ﻿using System;
-using RoomManager.Domain.Repositories;
-using RoomManager.Infrastructure.Queries;
-using RoomManager.Infrastructure.Repositories;
 using Microservice.Utility.Domain.SeedWork;
 using Microservice.Utility.Infrastructure.Extensions;
 using Microservice.Utility.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.DependencyInjection;
+using RoomManager.Domain.Repositories;
+using RoomManager.Infrastructure.Queries;
+using RoomManager.Infrastructure.Repositories;
 
 namespace RoomManager.Infrastructure
 {

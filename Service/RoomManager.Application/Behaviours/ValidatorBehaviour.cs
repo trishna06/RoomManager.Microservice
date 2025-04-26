@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using EventBus.Utility.Helper;
 using FluentValidation;
 using MediatR;
-using RoomManager.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
+using RoomManager.Domain.Exceptions;
 
 namespace RoomManager.Application.Behaviours
 {

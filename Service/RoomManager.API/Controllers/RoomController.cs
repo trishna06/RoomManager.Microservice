@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RoomManager.Application.Commands.DataTransferObjects;
+using RoomManager.Application.Commands.RoomAggregate;
 using RoomManager.Application.Helpers;
 using RoomManager.Application.Queries;
 
@@ -25,48 +25,41 @@ namespace RoomManager.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetRooms()
+        public async Task<IActionResult> GetRoomsAsync()
         {
-            List<object> rooms = new List<object>
-            {
-                new { Id = 1, Name = "Room A", Capacity = 10 },
-                new { Id = 2, Name = "Room B", Capacity = 20 }
-            };
-            return Ok(rooms);
+            return Ok(await _queries.GetAsync());
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetRoomById(int id)
+        public async Task<IActionResult> GetRoomByIdAsync(int id)
         {
-            var room = new { Id = id, Name = $"Room {id}", Capacity = 15 };
-            return Ok(room);
+            return Ok(await _queries.GetAsync(id));
         }
 
         [HttpPost]
-        public IActionResult CreateRoom([FromBody] object roomDto)
+        public async Task<IActionResult> CreateRoomAsync([FromBody] CreateRoomCommand command)
         {
-            // Assume creation successful
-            return CreatedAtAction(nameof(GetRoomById), new { id = 123 }, roomDto);
+            int id = await _mediator.Send(command);
+            return Ok(id);
         }
 
-        // PUT: api/Room/5
         [HttpPut("{id}")]
-        public IActionResult UpdateRoom(int id, [FromBody] object roomDto)
+        public async Task<IActionResult> UpdateRoomAsync(int id, [FromBody] UpdateRoomCommand command)
         {
-            // Assume update successful
+            command.Id = id;
+            await _mediator.Send(command);
             return NoContent();
         }
 
-        // DELETE: api/Room/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteRoom(int id)
+        public async Task<IActionResult> DeleteRoomAsync(int id)
         {
-            // Assume deletion successful
+            await _mediator.Send(new DeleteRoomCommand(id));
             return NoContent();
         }
 
         [HttpPost("Producer")]
-        public async Task<IActionResult> ProducerAsync([FromBody] RoomAvailabilityDto room)
+        public async Task<IActionResult> ProducerAsync([FromBody] RoomDto room)
         {
             await _kafkaProducer.ProduceAsync(room);
 

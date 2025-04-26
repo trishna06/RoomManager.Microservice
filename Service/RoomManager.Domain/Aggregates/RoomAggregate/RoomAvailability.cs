@@ -2,22 +2,16 @@
 
 namespace RoomManager.Domain.Aggregates.RoomAggregate
 {
-    public class RoomAvailability: Entity, IAggregate
+    public class RoomAvailability : Entity
     {
-        public Room Room { get; set; }
-
-        public string Status { get; set; }
+        public string Type { get; protected set; }
+        public string Status { get; protected set; }
 
         public RoomAvailability() { }
 
-        public RoomAvailability(Room room, string status): this()
+        public RoomAvailability(string type, string status) : this()
         {
-            Room = room;
-            Status = status;
-        }
-
-        public void UpdateStatus(string status)
-        {
+            Type = type;
             Status = status;
         }
     }

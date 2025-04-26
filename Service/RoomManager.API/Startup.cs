@@ -1,20 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using Autofac;
-using EventBus.Utility.Helper;
-using EventBus.Utility.MassTransit;
 using IdentityManager.API.Helper;
-using IdentityManager.API.Helper.Models;
-using RoomManager.API.Configurations;
-using RoomManager.API.Helpers;
-using RoomManager.API.Middlewares;
-using RoomManager.API.Services;
-using RoomManager.Application;
-using RoomManager.Application.Helpers;
-using RoomManager.Infrastructure;
+using Microservice.Utility.API.Helper;
 using Microservice.Utility.Domain.SeedWork;
 using Microservice.Utility.Exception;
 using Microsoft.AspNetCore.Builder;
@@ -27,8 +16,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using PermissionManager.API.Helper;
+using RoomManager.API.Configurations;
+using RoomManager.API.Helpers;
+using RoomManager.API.Middlewares;
+using RoomManager.API.Services;
+using RoomManager.Application;
+using RoomManager.Application.Helpers;
+using RoomManager.Infrastructure;
 using Serilog;
-using Microservice.Utility.API.Helper;
 
 namespace RoomManager.API
 {

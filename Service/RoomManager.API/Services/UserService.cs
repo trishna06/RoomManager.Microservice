@@ -1,7 +1,7 @@
 ﻿using System;
-using RoomManager.API.Helpers;
 using Microservice.Utility.Domain.SeedWork;
 using Microsoft.AspNetCore.Http;
+using RoomManager.API.Helpers;
 
 namespace RoomManager.API.Services
 {

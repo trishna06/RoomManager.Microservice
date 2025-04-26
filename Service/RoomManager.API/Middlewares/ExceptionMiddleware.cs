@@ -2,11 +2,11 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using RoomManager.API.Extensions;
 using Microservice.Utility.Exception;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Logging;
+using RoomManager.API.Extensions;
 
 namespace RoomManager.API.Middlewares
 {

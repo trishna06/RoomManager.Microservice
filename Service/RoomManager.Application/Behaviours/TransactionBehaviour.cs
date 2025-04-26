@@ -3,9 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using EventBus.Utility.Helper;
 using MediatR;
-using RoomManager.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using RoomManager.Infrastructure;
 using Serilog.Context;
 
 namespace RoomManager.Application.Behaviours

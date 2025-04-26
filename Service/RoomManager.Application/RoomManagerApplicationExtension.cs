@@ -1,14 +1,13 @@
 ﻿using System.Reflection;
 using Autofac;
-using RoomManager.Application.Queries;
+using Autofac.Extensions.DependencyInjection;
 using EventBus.Utility.Events;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using RoomManager.Application.BackgroundServices;
 using RoomManager.Application.Behaviours;
-using Autofac.Extensions.DependencyInjection;
 using RoomManager.Application.Helpers;
+using RoomManager.Application.Queries;
 
 namespace RoomManager.Application
 {

@@ -17,10 +17,10 @@ namespace RoomManager.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("RoomManager.Domain.Aggregates.RoomAggregate.Room", b =>
                 {
@@ -29,7 +29,11 @@ namespace RoomManager.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AvailabilityLinkId")
+                        .HasColumnType("int")
+                        .HasColumnName("AVAILABILITY_LINK_ID");
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier")
@@ -71,6 +75,8 @@ namespace RoomManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AvailabilityLinkId");
+
                     b.ToTable("RM_ROOM", (string)null);
                 });
 
@@ -81,7 +87,7 @@ namespace RoomManager.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<Guid?>("CreatedBy")
                         .HasColumnType("uniqueidentifier")
@@ -113,28 +119,27 @@ namespace RoomManager.Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("MODIFIED_DATE_TIME");
 
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("int")
-                        .HasColumnName("ROOM_LINK_ID");
-
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("STATUS");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TYPE");
 
-                    b.HasIndex("RoomId");
+                    b.HasKey("Id");
 
                     b.ToTable("RM_ROOM_AVAILABILITY", (string)null);
                 });
 
-            modelBuilder.Entity("RoomManager.Domain.Aggregates.RoomAggregate.RoomAvailability", b =>
+            modelBuilder.Entity("RoomManager.Domain.Aggregates.RoomAggregate.Room", b =>
                 {
-                    b.HasOne("RoomManager.Domain.Aggregates.RoomAggregate.Room", "Room")
+                    b.HasOne("RoomManager.Domain.Aggregates.RoomAggregate.RoomAvailability", "Availability")
                         .WithMany()
-                        .HasForeignKey("RoomId");
+                        .HasForeignKey("AvailabilityLinkId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("Room");
+                    b.Navigation("Availability");
                 });
 #pragma warning restore 612, 618
         }

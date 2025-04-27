@@ -58,9 +58,12 @@ namespace RoomManager.Application.BackgroundServices
                             Console.WriteLine(result.Message.Value);
                             if (update != null)
                             {
-                                Room room = await _repository.GetAsync(update.RoomId);
-                                room.UpdateAvailability(update.Type, update.Status);
-                                await _repository.UnitOfWork.SaveEntitiesAsync();
+                                Room room = await _repository.GetAsync(update.RoomId.Value);
+                                if (room != null)
+                                {
+                                    room.UpdateAvailability(update.Type, update.Status);
+                                    await _repository.UnitOfWork.SaveEntitiesAsync();
+                                }
                             }
                         }
                     }

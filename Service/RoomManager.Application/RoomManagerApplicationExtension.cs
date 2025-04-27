@@ -9,6 +9,7 @@ using RoomManager.Application.Behaviours;
 using RoomManager.Application.Helpers;
 using RoomManager.Application.Queries;
 using RoomManager.Application.BackgroundServices;
+using RoomManager.Application.Services;
 
 namespace RoomManager.Application
 {
@@ -23,8 +24,10 @@ namespace RoomManager.Application
 
         public static IServiceCollection AddRoomQueries(this IServiceCollection services)
         {
+            services.AddHttpClient();
             services.AddHostedService<KafkaConsumerService>();
             services.AddTransient<KafkaProducerHelper>();
+            services.AddTransient<ISqlStreamService, SqlStreamService>();
             services.AddTransient<IRoomQueries, RoomQueries>();
             return services;
         }

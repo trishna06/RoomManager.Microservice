@@ -6,6 +6,7 @@ using RoomManager.Application.Commands.DataTransferObjects;
 using RoomManager.Application.Commands.RoomAggregate;
 using RoomManager.Application.Helpers;
 using RoomManager.Application.Queries;
+using RoomManager.Application.Services;
 
 namespace RoomManager.API.Controllers
 {
@@ -16,12 +17,14 @@ namespace RoomManager.API.Controllers
         private readonly IMediator _mediator;
         private readonly IRoomQueries _queries;
         private readonly KafkaProducerHelper _kafkaProducer;
+        private readonly ISqlStreamService _streamService;
 
-        public RoomController(IMediator mediator, IRoomQueries queries, KafkaProducerHelper kafkaProducer)
+        public RoomController(IMediator mediator, IRoomQueries queries, KafkaProducerHelper kafkaProducer, ISqlStreamService streamService)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _queries = queries ?? throw new ArgumentNullException(nameof(queries));
             _kafkaProducer = kafkaProducer ?? throw new ArgumentNullException(nameof(kafkaProducer));
+            _streamService = streamService ?? throw new ArgumentNullException(nameof(streamService));
         }
 
         [HttpGet]
@@ -64,6 +67,12 @@ namespace RoomManager.API.Controllers
             await _kafkaProducer.ProduceAsync(availability);
 
             return Ok("Message sent to Kafka!");
+        }
+
+        [HttpGet("Stream")]
+        public async Task<IActionResult> StreamAsync()
+        {
+            return Ok(await _streamService.GetAvailableRoomsAsync());
         }
     }
 }

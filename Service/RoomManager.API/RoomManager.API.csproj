@@ -12,10 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Configuration.Contract" Version="1.0.3" />
-    <PackageReference Include="MimeKit" Version="4.9.0" />
     <PackageReference Include="DevExtreme.AspNet.Data" Version="4.0.1" />
-    <PackageReference Include="IdentityManager.API.Helper" Version="4.0.5" />
-    <PackageReference Include="IdentityManager.API.Helper.DependencyInjection" Version="4.0.5" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.8" />
@@ -23,7 +20,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="PermissionManager.API.Helper" Version="4.0.4" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
     <PackageReference Include="Serilog.Expressions" Version="5.0.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2" />

@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RoomManager.Application.Behaviours;
 using RoomManager.Application.Helpers;
 using RoomManager.Application.Queries;
+using RoomManager.Application.BackgroundServices;
 
 namespace RoomManager.Application
 {

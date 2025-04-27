@@ -17,7 +17,7 @@ namespace RoomManager.Application.Helpers
             _config = config;
         }
 
-        public async Task ProduceAsync(RoomDto roomAvailability)
+        public async Task ProduceAsync(RoomAvailabilityDto roomAvailability)
         {
             ProducerConfig conf = new ProducerConfig
             {

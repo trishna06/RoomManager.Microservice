@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RoomManager.Application.Commands.DataTransferObjects;
+using RoomManager.Domain.Aggregates.RoomAggregate;
+using RoomManager.Domain.Repositories;
 
 namespace RoomManager.Application.BackgroundServices
 {
@@ -14,11 +16,13 @@ namespace RoomManager.Application.BackgroundServices
     {
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IConfiguration _config;
+        private readonly IRoomRepository _repository;
 
-        public KafkaConsumerService(IServiceScopeFactory scopeFactory, IConfiguration config)
+        public KafkaConsumerService(IServiceScopeFactory scopeFactory, IConfiguration config, IRoomRepository repository)
         {
             _scopeFactory = scopeFactory;
             _config = config;
+            _repository = repository;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -50,10 +54,14 @@ namespace RoomManager.Application.BackgroundServices
 
                         if (result != null && result.Message != null)
                         {
-                            RoomDto update = JsonSerializer.Deserialize<RoomDto>(result.Message.Value);
-
-
+                            RoomAvailabilityDto update = JsonSerializer.Deserialize<RoomAvailabilityDto>(result.Message.Value);
                             Console.WriteLine(result.Message.Value);
+                            if (update != null)
+                            {
+                                Room room = await _repository.GetAsync(update.RoomId);
+                                room.UpdateAvailability(update.Type, update.Status);
+                                await _repository.UnitOfWork.SaveEntitiesAsync();
+                            }
                         }
                     }
                     catch (ConsumeException ex)

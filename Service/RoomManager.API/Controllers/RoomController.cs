@@ -59,9 +59,9 @@ namespace RoomManager.API.Controllers
         }
 
         [HttpPost("Producer")]
-        public async Task<IActionResult> ProducerAsync([FromBody] RoomDto room)
+        public async Task<IActionResult> ProducerAsync([FromBody] RoomAvailabilityDto availability)
         {
-            await _kafkaProducer.ProduceAsync(room);
+            await _kafkaProducer.ProduceAsync(availability);
 
             return Ok("Message sent to Kafka!");
         }
